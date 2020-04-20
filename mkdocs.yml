@@ -32,3 +32,5 @@ nav:
     - Home: index.md
     - mAP:
         - 引言: './map/index.md'
+        - '[代码解析]如何计算TP和FP': './map/代码解析-如何计算TP和FP.md'
+        - '[代码解析]如何计算Precision和Recall': './map/代码解析-如何计算Precision和Recall.md'
