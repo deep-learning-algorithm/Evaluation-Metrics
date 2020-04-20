@@ -87,6 +87,38 @@ def voc_ap(rec, prec):
     return ap, mrec, mpre
 
 
+def voc_ap2(rec, prec, use_07_metric=False):
+    """Compute VOC AP given precision and recall. If use_07_metric is true, uses
+    the VOC 07 11-point method (default:False).
+    """
+    if use_07_metric:
+        # 11 point metric
+        ap = 0.
+        for t in np.arange(0., 1.1, 0.1):
+            if np.sum(rec >= t) == 0:
+                p = 0
+            else:
+                p = np.max(prec[rec >= t])
+            ap = ap + p / 11.
+    else:
+        # correct AP calculation
+        # first append sentinel values at the end
+        mrec = np.concatenate(([0.], rec, [1.]))
+        mpre = np.concatenate(([0.], prec, [0.]))
+
+        # compute the precision envelope
+        for i in range(mpre.size - 1, 0, -1):
+            mpre[i - 1] = np.maximum(mpre[i - 1], mpre[i])
+
+        # to calculate area under PR curve, look for points
+        # where X axis (recall) changes value
+        i = np.where(mrec[1:] != mrec[:-1])[0]
+
+        # and sum (\Delta recall) * prec
+        ap = np.sum((mrec[i + 1] - mrec[i]) * mpre[i + 1])
+    return ap
+
+
 if __name__ == '__main__':
     ground_truth_dir = './input/ground-truth'
     detection_result_dir = './input/detection-results'
@@ -108,8 +140,9 @@ if __name__ == '__main__':
     count_true_positives = {}
     # 计算每个类别的tp/fp
     sum_AP = 0.0
-    ap_dictionary = {}
-    for cate, dt_list in dt_per_classes_dict.items():
+
+    for cate in gt_classes:
+        dt_list = dt_per_classes_dict[cate]
         # {cate_1: [], cate2: [], ...}
         nd = len(dt_list)
         tp = [0] * nd  # creates an array of zeros of size nd
@@ -153,7 +186,7 @@ if __name__ == '__main__':
                         if ov > ovmax:
                             ovmax = ov
                             gt_match = obj
-            # 如果大于最小IoU阈值，则进一步判断是否为TP
+            # 如果大于最小IoU阈值，还需要进一步判断是否为TP
             if ovmax >= MIN_OVERLAP:
                 if not bool(gt_match["used"]):
                     # true positive
@@ -182,14 +215,14 @@ if __name__ == '__main__':
 
         rec = tp[:]
         for idx, val in enumerate(tp):
-            rec[idx] = float(tp[idx]) / gt_per_classes_dict[cate]
+            rec[idx] = float(val) / gt_per_classes_dict[cate]
         # print(rec)
         prec = tp[:]
         for idx, val in enumerate(tp):
             prec[idx] = float(tp[idx]) / (fp[idx] + tp[idx])
-        # print(prec)
 
-        ap, mrec, mprec = voc_ap(rec[:], prec[:])
+        # ap, mrec, mprec = voc_ap(rec[:], prec[:])
+        ap = voc_ap2(rec[:], prec[:])
         sum_AP += ap
         # class_name + " AP = {0:.2f}%".format(ap*100)
         text = "{0:.2f}%".format(ap * 100) + " = " + cate + " AP "
