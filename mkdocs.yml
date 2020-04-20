@@ -30,3 +30,5 @@ extra_javascript:
 # 导航
 nav:
     - Home: index.md
+    - mAP:
+        - 引言: './map/index.md'
