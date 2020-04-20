@@ -49,6 +49,8 @@ $ pip install -r requirements.txt
 
 ## 致谢
 
+* [Cartucho/mAP](https://github.com/Cartucho/mAP)
+
 ## 参与贡献方式
 
 欢迎任何人的参与！打开[issue](https://github.com/zjZSTU/Evaluation-Metrics/issues)或提交合并请求。
