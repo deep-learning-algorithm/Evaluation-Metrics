@@ -7,3 +7,5 @@ input/
 .temp_files/
 
 output/
+
+.tmp_files/
