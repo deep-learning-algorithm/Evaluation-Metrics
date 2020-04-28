@@ -2,7 +2,7 @@
 
 [![Documentation Status](https://readthedocs.org/projects/evaluation-metrics/badge/?version=latest)](https://evaluation-metrics.readthedocs.io/zh_CN/latest/?badge=latest) [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme) [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org) [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-> 各种算法评价指标的实现，比如mAP
+> 各种算法评价指标的实现
 
 ## 内容列表
 
@@ -50,6 +50,7 @@ $ pip install -r requirements.txt
 ## 致谢
 
 * [Cartucho/mAP](https://github.com/Cartucho/mAP)
+* [Lyken17/pytorch-OpCounter](https://github.com/Lyken17/pytorch-OpCounter)
 
 ## 参与贡献方式
 
