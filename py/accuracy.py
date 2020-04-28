@@ -28,7 +28,7 @@ def accuracy(data_loader, model, device=None):
 
         # forward
         # track history if only in train
-        with torch.set_grad_enabled(False):
+        with torch.no_grad():
             outputs = model(inputs)
             # print(outputs.shape)
             _, preds = torch.max(outputs, 1)
@@ -42,7 +42,8 @@ def accuracy(data_loader, model, device=None):
 
 if __name__ == '__main__':
     transform = transforms.Compose([
-        transforms.Resize(224, 224),
+        # transforms.ToPILImage(),
+        transforms.Resize((224, 224)),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
