@@ -10,11 +10,9 @@
 import json
 import shutil
 import os
-import glob
 import numpy as np
 
-import util
-import file
+from utils import file, util
 
 
 def pretreat(ground_truth_dir, detection_result_dir, tmp_json_dir):
