@@ -35,3 +35,4 @@ nav:
         - '[代码解析]如何计算TP和FP': './map/代码解析-如何计算TP和FP.md'
         - '[代码解析]如何计算Precision和Recall': './map/代码解析-如何计算Precision和Recall.md'
     - '参数数目和Flops计算': './flops-params.md'
+    - '准确度和错误率': './acc-err.md'
