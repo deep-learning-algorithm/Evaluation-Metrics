@@ -32,6 +32,11 @@ $$
 
 `Mac`表示一次乘加操作（`Multiply–accumulate operation`）,通常在硬件架构中使用其计算张量操作，所以`Mac = 2Flops -> Flops = 2Mac`
 
+### 额外阅读
+
+* [有关FLOPS的定义与计算](https://www.jianshu.com/p/e61eeae2d338)
+* [分享一个FLOPs计算神器](https://www.jianshu.com/p/b1ceaa7effa8)：里面介绍了另外一个计算`Flops`的仓库
+
 ## 实现
 
 [Lyken17/pytorch-OpCounter](https://github.com/Lyken17/pytorch-OpCounter)实现了Macs和参数数目的计算
