@@ -8,7 +8,6 @@
 * [accuracy/error-rate](acc-err.md)
 * [mAP](map/index.md)
 
-## 文档链接
+## 相关阅读
 
 * [模型性能测试](https://blog.zhujian.life/posts/4bc9fe45.html)
-* [[目标检测][PASCAL VOC]mAP](https://blog.zhujian.life/posts/d817618d.html)
