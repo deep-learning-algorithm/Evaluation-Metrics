@@ -5,7 +5,7 @@
 * 模型
     * [params](./model/params.md)
     * [Flops](./model/flops.md)
-    * `FPS`
+    * [fps](./model/fps.md)
 * 目标分类
     * `accuracy`
     * `top-1 error rate`

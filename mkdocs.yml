@@ -33,6 +33,7 @@ nav:
     - 模型:
         - 如何计算模型大小: model/params.md
         - 如何衡量模型计算能力: model/flops.md
+        - 如何衡量模型/算法计算时间: model/fps.md
     - mAP:
         - 引言: './map/index.md'
         - '[代码解析]如何计算TP和FP': './map/代码解析-如何计算TP和FP.md'
