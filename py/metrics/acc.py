@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
 
 """
-@date: 2020/4/28 上午10:32
-@file: accuracy.py
+@date: 2020/5/25 下午2:54
+@file: acc.py
 @author: zj
-@description: 计算Top-1 correct rate
+@description: 
 """
 
 import torch
-from torch.utils.data import DataLoader
-from torchvision.models import alexnet
-from torchvision.datasets import CIFAR10
-import torchvision.transforms as transforms
-
-from utils import util
 
 
 def topk_accuracy(output, target, topk=(1,)):
@@ -38,7 +32,8 @@ def topk_accuracy(output, target, topk=(1,)):
     return res
 
 
-def compute_accuracy(data_loader, model, device=None, isErr=False):
+@torch.no_grad()
+def compute_accuracy(data_loader, model, device=None, isErr=False, topk=(1, 5)):
     if device:
         model = model.to(device)
 
@@ -57,34 +52,13 @@ def compute_accuracy(data_loader, model, device=None, isErr=False):
             # _, preds = torch.max(outputs, 1)
 
             # statistics
-            res_acc = topk_accuracy(outputs, targets, topk=(1, 5))
+            res_acc = topk_accuracy(outputs, targets, topk=topk)
             epoch_top1_acc += res_acc[0]
             epoch_top5_acc += res_acc[1]
 
     if isErr:
-        top_1_err = 1 - epoch_top1_acc / len(data_loader)
-        top_5_err = 1 - epoch_top5_acc / len(data_loader)
+        top_1_err = 100 - epoch_top1_acc / len(data_loader)
+        top_5_err = 100 - epoch_top5_acc / len(data_loader)
         return top_1_err, top_5_err
     else:
         return epoch_top1_acc / len(data_loader), epoch_top5_acc / len(data_loader)
-
-
-if __name__ == '__main__':
-    transform = transforms.Compose([
-        # transforms.ToPILImage(),
-        transforms.Resize((224, 224)),
-        transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-    ])
-
-    # 提取测试集
-    data_set = CIFAR10('./data', download=True, train=False, transform=transform)
-    data_loader = DataLoader(data_set, shuffle=True, batch_size=128, num_workers=8)
-
-    num_classes = 10
-    model = alexnet(num_classes=num_classes)
-
-    device = util.get_device()
-    epoch_top1_acc, epoch_top5_acc = compute_accuracy(data_loader, model, device=device)
-    print('top 1 acc: {:.3f}'.format(epoch_top1_acc))
-    print('top 5 acc: {:.3f}'.format(epoch_top5_acc))
