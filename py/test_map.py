@@ -14,4 +14,7 @@ if __name__ == '__main__':
     detection_result_dir = './input/detection-results'
     tmp_json_dir = './.tmp_files'
 
-    voc_evaluation(ground_truth_dir, detection_result_dir, tmp_json_dir)
+    metrics = voc_evaluation(ground_truth_dir, detection_result_dir, tmp_json_dir)
+
+    for key, item in metrics.items():
+        print('{} = {:.3f}%'.format(key, item * 100))

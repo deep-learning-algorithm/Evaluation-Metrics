@@ -24,8 +24,8 @@ def voc_evaluation(ground_truth_dir, detection_result_dir, tmp_json_dir):
     # let's sort the classes alphabetically
     gt_classes = sorted(gt_classes)
     n_classes = len(gt_classes)
-    print(gt_classes)
-    print(gt_per_classes_dict)
+    # print(gt_classes)
+    # print(gt_per_classes_dict)
 
     dt_per_classes_dict = parse_detection_results(detection_result_dir, tmp_json_dir)
 
@@ -33,7 +33,7 @@ def voc_evaluation(ground_truth_dir, detection_result_dir, tmp_json_dir):
     # 计算每个类别的tp/fp
     sum_AP = 0.0
 
-    # metrics = {}
+    metrics = dict()
     for cate in gt_classes:
         tp, fp = compute_tp_fp(dt_per_classes_dict, tmp_json_dir, cate, MIN_OVERLAP=MIN_OVERLAP)
 
@@ -42,9 +42,14 @@ def voc_evaluation(ground_truth_dir, detection_result_dir, tmp_json_dir):
         # ap, mrec, mprec = voc_ap(rec[:], prec[:])
         ap = voc_ap2(rec[:], prec[:])
         sum_AP += ap
+
+        metrics[cate] = ap
         # class_name + " AP = {0:.2f}%".format(ap*100)
-        text = "{0:.2f}%".format(ap * 100) + " = " + cate + " AP "
-        print(text)
+        # text = "{0:.2f}%".format(ap * 100) + " = " + cate + " AP "
+        # print(text)
     mAP = sum_AP / n_classes
-    text = "mAP = {0:.2f}%".format(mAP * 100)
-    print(text)
+    metrics['map'] = mAP
+    # text = "mAP = {0:.2f}%".format(mAP * 100)
+    # print(text)
+
+    return metrics
