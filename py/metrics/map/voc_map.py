@@ -12,32 +12,8 @@ import shutil
 import os
 import numpy as np
 
-from utils import file, util
 
-
-def pretreat(ground_truth_dir, detection_result_dir, tmp_json_dir):
-    """
-    预处理，保证真值边界框文件与预测边界框的文件一一对应，清空临时文件夹
-    :param ground_truth_dir: 目录，保存真值边界框信息
-    :param detection_result_dir: 目录，保存预测边界框信息
-    :param tmp_json_dir: 临时文件夹
-    """
-    gt_list = [os.path.splitext(name)[0] for name in os.listdir(ground_truth_dir)]
-    dr_list = [os.path.splitext(name)[0] for name in os.listdir(detection_result_dir)]
-
-    if len(gt_list) == len(dr_list) and len(gt_list) == np.sum(
-            [True if name in dr_list else False for name in gt_list]):
-        pass
-    else:
-        util.error('真值边界框文件和预测边界框文件没有一一对应')
-
-    if os.path.exists(tmp_json_dir):  # if it exist already
-        # reset the tmp directory
-        shutil.rmtree(tmp_json_dir)
-    os.mkdir(tmp_json_dir)
-
-
-def compute_tp_fp(dt_per_classes_dict, MIN_OVERLAP=0.5):
+def compute_tp_fp(dt_per_classes_dict, tmp_json_dir, cate, MIN_OVERLAP=0.5):
     dt_list = dt_per_classes_dict[cate]
     # {cate_1: [], cate2: [], ...}
     nd = len(dt_list)
@@ -202,40 +178,3 @@ def voc_ap2(rec, prec, use_07_metric=False):
         # and sum (\Delta recall) * prec
         ap = np.sum((mrec[i + 1] - mrec[i]) * mpre[i + 1])
     return ap
-
-
-if __name__ == '__main__':
-    ground_truth_dir = './input/ground-truth'
-    detection_result_dir = './input/detection-results'
-    tmp_json_dir = '.tmp_files'
-    pretreat(ground_truth_dir, detection_result_dir, tmp_json_dir)
-
-    # 将.txt文件解析成json格式
-    gt_per_classes_dict = file.parse_ground_truth(ground_truth_dir, tmp_json_dir)
-    gt_classes = list(gt_per_classes_dict.keys())
-    # let's sort the classes alphabetically
-    gt_classes = sorted(gt_classes)
-    n_classes = len(gt_classes)
-    print(gt_classes)
-    print(gt_per_classes_dict)
-
-    dt_per_classes_dict = file.parse_detection_results(detection_result_dir, tmp_json_dir)
-
-    MIN_OVERLAP = 0.5
-    # 计算每个类别的tp/fp
-    sum_AP = 0.0
-
-    for cate in gt_classes:
-        tp, fp = compute_tp_fp(dt_per_classes_dict, MIN_OVERLAP=MIN_OVERLAP)
-
-        prec, rec = compute_precision_recall(tp, fp, gt_per_classes_dict[cate])
-
-        # ap, mrec, mprec = voc_ap(rec[:], prec[:])
-        ap = voc_ap2(rec[:], prec[:])
-        sum_AP += ap
-        # class_name + " AP = {0:.2f}%".format(ap*100)
-        text = "{0:.2f}%".format(ap * 100) + " = " + cate + " AP "
-        print(text)
-    mAP = sum_AP / n_classes
-    text = "mAP = {0:.2f}%".format(mAP * 100)
-    print(text)
