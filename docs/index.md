@@ -4,7 +4,7 @@
 
 * 模型
     * [params](./model/params.md)
-    * `Flops`
+    * [Flops](./model/flops.md)
     * `FPS`
 * 目标分类
     * `accuracy`
