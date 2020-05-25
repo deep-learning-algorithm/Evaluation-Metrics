@@ -1,9 +1,19 @@
 
-# 准确度和错误率
+# 准确率和错误率
 
-在分类任务中，最常用的评价指标是准确率、`Top-1`错误率和`Top-5`错误率
+参考：
 
-## 准确率
+[eval.py](https://github.com/bearpaw/pytorch-classification/blob/cc9106d598ff1fe375cc030873ceacfea0499d77/utils/eval.py)
+
+[ImageNet Example Accuracy Calculation](https://discuss.pytorch.org/t/imagenet-example-accuracy-calculation/7840)
+
+[Top k error calculation](https://discuss.pytorch.org/t/top-k-error-calculation/48815)
+
+## 定义
+
+在分类任务中，最常用的评价指标是准确率（`Accuracy`）和错误率（`Error Rate`）
+
+### 准确率
 
 在分类任务中，计算准确率（`accuracy`）即是指计算`Top-1`正确率，也就是**分类概率最高的类别等于标记类别**的样本数除以样本总数，其计算公式如下：
 
@@ -11,7 +21,7 @@ $$
 Acc = \frac {TP + TN}{TP+FP+TN+FN}
 $$
 
-## Top-1/Top-5错误率
+### 错误率
 
 错误率和准确率相对
 
@@ -32,20 +42,14 @@ $$
 
 ## 实现
 
-参考：
+### 关键函数
 
-[eval.py](https://github.com/bearpaw/pytorch-classification/blob/cc9106d598ff1fe375cc030873ceacfea0499d77/utils/eval.py)
-
-[ImageNet Example Accuracy Calculation](https://discuss.pytorch.org/t/imagenet-example-accuracy-calculation/7840)
-
-[Top k error calculation](https://discuss.pytorch.org/t/top-k-error-calculation/48815)
-
-其实现位于`py/accuracy`，其中使用了几个关键`PyTorch`函数
+使用了几个关键`PyTorch`函数
 
 1. [topk](https://pytorch.org/docs/stable/torch.html#torch.topk)
 2. [mul](https://pytorch.org/docs/stable/torch.html#torch.mul)
 
-### topk
+#### topk
 
 >torch.topk(input, k, dim=None, largest=True, sorted=True, out=None) -> (Tensor, LongTensor)
 
@@ -76,7 +80,7 @@ tensor([ 0.4377,  0.0466, -0.3709])
 tensor([0, 1, 2])
 ```
 
-### mul
+#### mul
 
 > torch.mul(input, other, out=None)
 
@@ -98,3 +102,8 @@ tensor([0.0000, 0.1000, 0.2000])
 >>> d.mul(0.1)
 tensor([0.0000, 0.1000, 0.2000])
 ```
+
+### 使用
+
+* 实现文件：`metrics/acc.py`
+* 测试文件：`test_acc_err.py`

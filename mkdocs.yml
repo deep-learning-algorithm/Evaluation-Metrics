@@ -30,14 +30,11 @@ extra_javascript:
 # 导航
 nav:
     - Home: index.md
-    - 模型:
-        - 如何计算模型大小: model/params.md
-        - 如何衡量模型计算能力: model/flops.md
-        - 如何衡量模型/算法计算时间: model/fps.md
+    - 如何计算模型大小: params.md
+    - 如何衡量模型计算能力: flops.md
+    - 如何衡量模型/算法计算时间: fps.md
+    - 准确度和错误率: acc-err.md
     - mAP:
         - 引言: './map/index.md'
         - '[代码解析]如何计算TP和FP': './map/代码解析-如何计算TP和FP.md'
         - '[代码解析]如何计算Precision和Recall': './map/代码解析-如何计算Precision和Recall.md'
-    - '参数数目和Flops计算': './flops-params.md'
-    - '准确度和错误率': './acc-err.md'
-    - 'FPS': './fps.md'
