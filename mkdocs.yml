@@ -30,6 +30,8 @@ extra_javascript:
 # 导航
 nav:
     - Home: index.md
+    - 模型:
+        - 如何计算模型大小: model/params.md
     - mAP:
         - 引言: './map/index.md'
         - '[代码解析]如何计算TP和FP': './map/代码解析-如何计算TP和FP.md'
