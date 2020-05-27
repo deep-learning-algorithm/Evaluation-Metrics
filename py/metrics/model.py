@@ -28,6 +28,7 @@ def compute_params(model):
     return sum([param.numel() for param in model.parameters()])
 
 
+@torch.no_grad()
 def compute_fps(model, shape, epoch=100, device=None):
     """
     frames per second
