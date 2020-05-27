@@ -1,3 +1,5 @@
+voc2coco/outputs
+
 data/
 
 __pycache__/
