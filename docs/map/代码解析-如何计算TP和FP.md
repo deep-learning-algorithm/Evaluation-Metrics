@@ -1,7 +1,7 @@
 
 # [代码解析]如何计算TP和FP
 
-相关文件：`mAP/voc_map.py`
+相关文件：`py/metrics/map/voc_map.py`
 
 ## 前提条件
 
