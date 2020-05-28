@@ -52,6 +52,7 @@ $ pip install -r requirements.txt
 * [Cartucho/mAP](https://github.com/Cartucho/mAP)
 * [Lyken17/pytorch-OpCounter](https://github.com/Lyken17/pytorch-OpCounter)
 * [lufficc/SSD](https://github.com/lufficc/SSD)
+* [cocodataset/cocoapi](https://github.com/cocodataset/cocoapi)
 
 ## 参与贡献方式
 
