@@ -4,7 +4,7 @@
 # metrics/map/misc.py: 10
 # metrics/map/voc_map.py: 13
 # utils/util.py: 10
-numpy == 1.17.2
+numpy == 1.22.0
 
 # metrics/model.py: 14
 thop == 0.0.31.post2004272040
